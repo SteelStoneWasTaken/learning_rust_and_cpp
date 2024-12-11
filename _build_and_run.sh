@@ -1,2 +1,2 @@
-./build.sh # AuToExPlIcAtIvO
-./run.sh   # aUtOeXpLlCaTiVo
+./_build.sh # AuToExPlIcAtIvO
+./_run.sh   # aUtOeXpLlCaTiVo

@@ -14,6 +14,8 @@ void onButtonClicked() {
 
 int main(int argc, char *argv[])
 {
+    std::setlocale(LC_ALL, "en_US.UTF-8");
+
     QApplication app(argc, argv);
 
     QWidget window;
