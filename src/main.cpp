@@ -2,14 +2,21 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QLineEdit>
 #include <iostream>
 
 extern "C" int duplicar(int x);
 
-void onButtonClicked() {
-    int num;
-    num = duplicar(2);
-    std::cout << "2*2= " << num << std::endl;
+void onButtonClicked(QLineEdit* inputField) {
+    bool ok;
+    int num = inputField->text().toInt(&ok);
+
+    if (ok) {
+        num = duplicar(num);
+        std::cout << num << std::endl;
+    } else {
+        std::cout << "..." << std::endl;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -22,17 +29,22 @@ int main(int argc, char *argv[])
     window.setWindowTitle("Janela Simples");
     window.resize(300, 200);
 
-    // Criar o botão
-    QPushButton *button = new QPushButton("Clique Aqui", &window);
+    // // // // // // // // // // // // // // // // // //
 
-    // Conectar o sinal de clique do botão ao slot que imprime no console
-    QObject::connect(button, &QPushButton::clicked, &onButtonClicked);
+    // inputField
+    QLineEdit *inputField = new QLineEdit(&window);
+    inputField->setPlaceholderText("Digite um número");
+    // button
+    QPushButton *button = new QPushButton("Duplicar", &window);
+    QObject::connect(button, &QPushButton::clicked, [&]() { onButtonClicked(inputField); });
 
-    // Usar um layout para organizar o botão
-    QVBoxLayout *layout = new QVBoxLayout(&window);
-    layout->addWidget(button);
 
-    window.setLayout(layout);
+    QVBoxLayout *layout = new QVBoxLayout(&window); // //
+    //                                                 //
+    layout->addWidget(inputField);                     //
+    layout->addWidget(button);                         //
+    //                                                 //
+    window.setLayout(layout);  // // // // // // // // //
 
     window.show();
     return app.exec();
