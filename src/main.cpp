@@ -6,22 +6,11 @@
 #include <iostream>
 
 extern "C" int duplicar(int x);
-
-void onButtonClicked(QLineEdit* inputField) {
-    bool ok;
-    int num = inputField->text().toInt(&ok);
-
-    if (ok) {
-        num = duplicar(num);
-        std::cout << num << std::endl;
-    } else {
-        std::cout << "..." << std::endl;
-    }
-}
+extern "C" int retornar();
 
 int main(int argc, char *argv[])
 {
-    std::setlocale(LC_ALL, "en_US.UTF-8");
+    std::setlocale(LC_ALL, "pt_BR.UTF-8");
 
     QApplication app(argc, argv);
 
@@ -31,17 +20,23 @@ int main(int argc, char *argv[])
 
     // // // // // // // // // // // // // // // // // //
 
-    // inputField
-    QLineEdit *inputField = new QLineEdit(&window);
-    inputField->setPlaceholderText("Digite um número");
-    // button
+    // Input
+    QLineEdit *input = new QLineEdit(&window);
+    input->setPlaceholderText("Digite um número");
+
+    // Button
     QPushButton *button = new QPushButton("Duplicar", &window);
-    QObject::connect(button, &QPushButton::clicked, [&]() { onButtonClicked(inputField); });
+
+    QObject::connect(button, &QPushButton::clicked, [&]() {
+        bool ok;
+        duplicar(input->text().toInt(&ok));
+        std::cout << retornar() << std::endl;
+    });
 
 
     QVBoxLayout *layout = new QVBoxLayout(&window); // //
     //                                                 //
-    layout->addWidget(inputField);                     //
+    layout->addWidget(input);                          //
     layout->addWidget(button);                         //
     //                                                 //
     window.setLayout(layout);  // // // // // // // // //
